@@ -6,6 +6,8 @@ const morgan = require('morgan')
 const config = require('./config/config')
 //db
 const connectDB = require('./db/connect')
+//route
+const routerApi = require('./routes')
 
 
 const PORT = config.port || 5000
@@ -20,6 +22,8 @@ app.use(morgan('common'))
 app.get('/', (req, res) => {
     res.send('hello ¡')
 })
+
+routerApi(app)
 
 
 const start = async () => {
