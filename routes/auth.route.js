@@ -14,7 +14,7 @@ router.post('/register', async(req, res) => {
         res.status(201).json(newUser)
     } catch (error) {
         console.error(error)
-        res.status(500).json(error)
+        // res.status(500).json(error)
     }
 })
 
@@ -33,7 +33,7 @@ router.post('/login', async(req, res) => {
         res.status(200).json({id: user._id, username: user.username})
     } catch (error) {
         console.error(error)
-        res.status(500).json(error)
+        // res.status(500).json(error)
     }
 })
 
