@@ -19,13 +19,31 @@ class UsersService {
         return user
     }
 
-    async update(id,data) {
+    async updateById(id,data) {
         const user = await User.findByIdAndUpdate(id,{
             $set: data
         })
 
        return user
     }
+
+    async followUser(user,key,value) {
+        await user.updateOne({
+            $push: {
+                [key]: value
+            }
+        })
+    }
+
+
+    async unFollowUser(user,key,value) {
+        await user.updateOne({
+            $pull: {
+                [key]: value
+            }
+        })
+    }
+
 
     async delete(id) {
         const user = await User.findByIdAndDelete(id)
