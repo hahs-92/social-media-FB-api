@@ -9,20 +9,44 @@ class PostsService {
         return newPost
     }
 
+
     async update(post,data) {
         await post.updateOne({
             $set: data
         })
     }
 
+
+    async likePost(post,data) {
+        await post.updateOne({
+            $push: {
+                likes: data
+            }
+        })
+    }
+
+
+    async unLikePost(post,data) {
+        await post.updateOne({
+            $pull: {
+                likes: data
+            }
+        })
+    }
+
+
     async delete(post) {
         await post.deleteOne()
     }
 
-    async findAll() {
-        const posts = await Post.find({})
+
+    async findAll(key, value) {
+        const query = {}
+        if(key & value) query[key] = value
+        const posts = await Post.find(query)
         return posts
     }
+
 
     async findById(id) {
         const post = await Post.findById(id)
