@@ -22,6 +22,26 @@ router.post('/', async (req, res) => {
     }
 })
 
+//timeline
+router.get('/timeline/:userId', async(req, res) => {
+    try {
+        const user = await serviceUser.findOneById(req.params.userId)
+
+        const userPosts = await service.findAll('userId', user._id)
+
+        const friendPosts = await Promise.all(
+            user.followings.map((friendId) => {
+                return service.findAll('userId',friendId)
+            })
+        )
+
+        res.status(200).json(userPosts.concat(...friendPosts))
+
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+})
+
 
 //get post by id
 router.get('/:id', async (req, res) => {
@@ -99,26 +119,6 @@ router.patch('/:id/like', async (req, res) => {
     }
 })
 
-
-//timeline
-router.get('/timeline/all', async(req, res) => {
-    try {
-        const user = await serviceUser.findOneById(req.body.userId)
-
-        const userPosts = await service.findAll('userId', user._id)
-
-        const friendPosts = await Promise.all(
-            user.followings.map((friendId) => {
-                return service.findAll('userId',friendId)
-            })
-        )
-
-        res.status(200).json(userPosts.concat(...friendPosts))
-
-    } catch (error) {
-        res.status(500).json(error.message)
-    }
-})
 
 
 module.exports = router

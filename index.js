@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const helmet = require('helmet')
 const morgan = require('morgan')
+const cors = require('cors')
 //config
 const config = require('./config/config')
 //db
@@ -17,6 +18,7 @@ const app = express()
 app.use(express.json())
 app.use(helmet())
 app.use(morgan('common'))
+app.use(cors())
 
 //routes
 app.get('/', (req, res) => {
