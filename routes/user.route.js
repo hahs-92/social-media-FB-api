@@ -9,9 +9,13 @@ const service = new UsersService()
 
 
 //get one user by Id
-router.get('/:id', async (req, res) => {
+router.get('/', async (req, res) => {
+    const userId = req.query.userId
+    const username = req.query.username
     try {
-        const user = await service.findOneById(req.params.id)
+        const user = userId
+            ? await service.findOneById(userId)
+            : await service.findOne(username)
 
         !user && res.status(404).json('user not found')
 

@@ -9,8 +9,8 @@ class UsersService {
         return newUser
     }
 
-    async findOne(email) {
-        const user = await User.findOne({email})
+    async findOne(query) {
+        const user = await User.findOne({query})
         return user
     }
 

@@ -52,6 +52,12 @@ class PostsService {
         const post = await Post.findById(id)
         return post
     }
+
+
+    async findOne(query) {
+        const post = await Post.findOne(query)
+        return post
+    }
 }
 
 module.exports = PostsService
