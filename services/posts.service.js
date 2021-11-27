@@ -41,9 +41,14 @@ class PostsService {
 
 
     async findAll(key, value) {
-        const query = {}
-        if(key & value) query[key] = value
+        let query = {}
+
+        if(key && value) {
+            query[key] = value
+        }
+
         const posts = await Post.find(query)
+
         return posts
     }
 

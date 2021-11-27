@@ -26,7 +26,6 @@ router.post('/', async (req, res) => {
 router.get('/timeline/:userId', async(req, res) => {
     try {
         const user = await serviceUser.findOneById(req.params.userId)
-
         const userPosts = await service.findAll('userId', user._id)
 
         const friendPosts = await Promise.all(
@@ -44,7 +43,7 @@ router.get('/timeline/:userId', async(req, res) => {
 
 router.get('/profile/:username', async(req, res) => {
     try {
-        const user = await serviceUser.findOne(req.params.username)
+        const user = await serviceUser.findOne("username",req.params.username)
         const posts = await service.findOne(user._id)
 
         res.status(200).json(posts)

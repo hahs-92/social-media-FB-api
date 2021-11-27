@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     try {
         const user = userId
             ? await service.findOneById(userId)
-            : await service.findOne(username)
+            : await service.findOne("username",username)
 
         !user && res.status(404).json('user not found')
 

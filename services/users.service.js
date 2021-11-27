@@ -9,8 +9,9 @@ class UsersService {
         return newUser
     }
 
-    async findOne(query) {
-        const user = await User.findOne({query})
+    async findOne(key, value) {
+        const user = await User.findOne({ [key]: value })
+
         return user
     }
 

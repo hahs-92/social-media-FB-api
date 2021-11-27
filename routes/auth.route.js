@@ -8,6 +8,7 @@ const service = new UsersService()
 
 
 router.post('/register', async(req, res) => {
+    console.log("passwordRegister: ", req.body.password)
     try {
         const newUser = await service.create(req.body)
 
@@ -21,7 +22,7 @@ router.post('/register', async(req, res) => {
 
 router.post('/login', async(req, res) => {
     try {
-        const user = await service.findOne(req.body.email)
+        const user = await service.findOne("email",req.body.email)
 
         !user && res.status(404).json('User not found')
 
@@ -30,7 +31,12 @@ router.post('/login', async(req, res) => {
 
         !isPassword && res.status(404).json('Invalid Credentials')
 
-        res.status(200).json({id: user._id, username: user.username})
+        // res.status(200).json({id: user._id, username: user.username})
+
+        const { password, ...info } = user._doc
+        console.log("user: ", info)
+        res.status(200).json(info)
+
     } catch (error) {
         console.error(error)
         // res.status(500).json(error)
