@@ -27,6 +27,36 @@ router.get('/', async (req, res) => {
     }
 })
 
+//get friends
+router.get('/friends/:userId', async(req, res) => {
+    let friendsList = []
+
+    try {
+        const user = await service.findOneById(req.params.userId)
+
+        const friends = await Promise.all(
+            user.followings.map(friendId => {
+                return service.findOneById(friendId)
+            })
+        )
+
+        friends.map(friend => {
+            const { _id, username, profilePicture } = friend
+
+            friendsList.push({
+                _id,
+                username,
+                profilePicture
+            })
+        })
+
+        res.status(200).json(friendsList)
+
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+})
+
 router.patch('/:id',async (req,res) => {
     if(req.body.userId === req.params.id || req.body.isAdmin) {
 
